@@ -8,21 +8,36 @@ yesButtonEl.addEventListener('click', function () {
     startPageEl.classList.add('hidden');
 })
 
-// const options = {
-//     method: 'GET',
-//     headers: {
-//         'X-RapidAPI-Key': '2a04cdf469msh1e78a92a5670198p13c589jsnc62862abddff',
-//         'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
-//     }
-// };
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'cd0d5f858cmshd6c0ec62f5398dap1ccc43jsnf57204214a17',
+		'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
+	}
+};
 
-// fetch('https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&q=enchilada', options)
-//     .then(function (response) {
-//         if (response.ok) {
-//             console.log(response);
-//             return response.json();
-//         }
-//     })
-//     .then(function (data) {
-//         console.log(data.results)
-//     })
+var getTastyAPI = function () {
+// fetch('https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&tags=under_30_minutes', options)
+fetch('https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&q=enchilada', options)
+	.then(function (response) {
+              if (response.ok) {
+                response.json().then(function (data) {
+                    console.log(data);
+
+                    var randomRecipe = data.results[Math.floor(Math.random()*data.results.length)]
+                    var currentName = randomRecipe.name;
+                    console.log(currentName,'recipe name');
+
+                    var instructionsArray = randomRecipe.instructions;
+                
+                    for (var i = 0; i < instructionsArray.length; i++ ) {
+                        var currentInstructions = randomRecipe.instructions[i].display_text;
+                        console.log(currentInstructions, 'INSTRUCTIONS');
+                    }
+                    
+                    
+                });
+              };
+            });
+        };
+getTastyAPI();
