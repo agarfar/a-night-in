@@ -103,9 +103,11 @@ var displayCocktail = function (cocktailID) {
             console.log("template", template);
             ingredientEl.innerHTML = template;
 
-
+            cocktailNameEl.innerHTML = data.drinks[0].strDrink;
             instructionsEl.innerHTML = data.drinks[0].strInstructions;
 
+            drinkIngrArray = [];
+            drinkMeasureArray = [];
         })
 }
 
