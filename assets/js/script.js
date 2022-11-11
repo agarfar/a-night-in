@@ -1,16 +1,31 @@
 var yesButtonEl = document.querySelector(".yes");
 var foodMenuEl = document.querySelector(".tasty");
 var startPageEl = document.querySelector(".start");
+var cocktailInputEl = document.querySelector('#cocktail-input');
+var cocktailBtnEl = document.querySelector('.cocktail-btn');
+var ingredientEl = document.querySelector('.ingredients');
+var instructionsEl = document.querySelector('.instructions');
+var cocktailNameEl = document.querySelector('.cocktail-name');
+var favoriteBtnEl = document.querySelector('.favorite-btn')
+var dinnerSearchFormEl = document.querySelector("#dinner-search");
+var dinnerInputEl = document.querySelector("#dinner-input");
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+var cocktailFavorite;
+var drinkIngrArray = [];
+var drinkMeasureArray = [];
+
+var cocktailID;
+var cocktail;
 
 yesButtonEl.addEventListener("click", function () {
   foodMenuEl.classList.remove("hidden");
   startPageEl.classList.add("hidden");
 });
 
-var requestOptions = {
-  method: 'GET',
-  redirect: 'follow'
-};
 
 var getSpoonacularID = function (dinner) {
   var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=e1b602421bad484d867c8e45948bb384&query=${dinner}`
@@ -26,7 +41,6 @@ var getSpoonacularID = function (dinner) {
         console.log(chosenRecipeID);
         console.log(chosenRecipeImage);
         console.log(chosenRecipeTitle);
-        // localStorage.setItem(chosenRecipeID,"recipeID");
         chosenRecipeInstructions(chosenRecipeID);
         
         
@@ -34,7 +48,8 @@ var getSpoonacularID = function (dinner) {
     }
   });
 };
-getSpoonacularID();
+
+
 
 var chosenRecipeInstructions = function (chosenRecipeID){
   var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=e1b602421bad484d867c8e45948bb384`
@@ -56,77 +71,6 @@ var chosenRecipeInstructions = function (chosenRecipeID){
 };
 
 
-// const options = {
-//   method: "GET",
-//   headers: {
-//     "X-RapidAPI-Key": "cd0d5f858cmshd6c0ec62f5398dap1ccc43jsnf57204214a17",
-//     "X-RapidAPI-Host": "tasty.p.rapidapi.com",
-//   },
-// };
-
-
-
-// var getTastyAPI = function (dinner) {
-//   var url = `https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&q=${dinner}`;
-//   fetch(url, options).then(function (response) {
-//     if (response.ok) {
-//       response.json().then(function (data) {
-//         console.log(data);
-
-//         var randomRecipe =
-//           data.results[Math.floor(Math.random() * data.results.length)];
-//         console.log(randomRecipe, "random recipe array");
-//         var currentName = randomRecipe.name;
-//         console.log(currentName, "recipe name");
-
-//         var instructionsArray = randomRecipe.instructions;
-
-//         var currentSection = randomRecipe.sections;
-//         console.log(currentSection, "current section");
-
-
-//         let template ="";
-
-//         for (var i = 0; i < currentSection.length; i++) {
-
-//           var splitSections = currentSection[i];
-//           console.log(splitSections, "each section");
-
-//           var sectionName = splitSections.name;
-//           if (sectionName !== null){
-//             console.log(sectionName, 'section name');
-//           }
-      
-//           // build outer container
-
-//           var ingredientArray = currentSection[i].components;
-//           console.log(ingredientArray, 'ingredientArray');
-
-//           for (var j = 0; j < ingredientArray.length; j++) {
-//             var ingredient = ingredientArray[j].raw_text;
-//             console.log(ingredient, 'ingredient')
-//             // build inner container
-//           }
-
-//           //add to template + built template
-
-//         }
-
-//         for (var i = 0; i < instructionsArray.length; i++) {
-//           var currentInstructions = randomRecipe.instructions[i].display_text;
-//           console.log(currentInstructions, "INSTRUCTIONS");
-//         }
-
-//         var recipePhotos = randomRecipe.thumbnail_url;
-//         console.log(recipePhotos, "thumbnail");
-//       });
-//     }
-//   });
-// };
-// getTastyAPI();
-
-var dinnerSearchFormEl = document.querySelector("#dinner-search");
-var dinnerInputEl = document.querySelector("#dinner-input");
 
 var formSubmitHandler = function (event) {
   event.preventDefault();
@@ -140,3 +84,77 @@ var formSubmitHandler = function (event) {
 };
 
 dinnerSearchFormEl.addEventListener("submit", formSubmitHandler);
+
+
+
+
+const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': 'cd0d5f858cmshd6c0ec62f5398dap1ccc43jsnf57204214a17',
+        'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
+    }
+};
+
+var getCocktailID = function (alcohol) {
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    fetch(`https://thecocktaildb.com/api/json/v1/1/filter.php?i=${alcohol}`, requestOptions)
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(function (data) {
+            // console.log('alcoholList', data.drinks);
+            var randomCocktail = data.drinks[Math.floor(Math.random() * data.drinks.length)]
+            console.log(randomCocktail);
+            console.log('randomCocktailID', randomCocktail.idDrink)
+            cocktailID = randomCocktail.idDrink;
+            displayCocktail(cocktailID)
+        })
+}
+
+var displayCocktail = function (cocktailID) {
+    fetch(`https://thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailID}`)
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+                // response.json();
+            }
+        })
+        .then(function (data) {
+            console.log(data)
+            for (i = 1; i <= 15; i++) {
+                if (data.drinks[0][`strIngredient${i}`] === null || data.drinks[0][`strMeasure${i}`] === null) {
+                    break
+                }
+                // console.log(data.drinks[0]['strIngredient1'])
+                drinkIngrArray.push(data.drinks[0][`strIngredient${i}`])
+                drinkMeasureArray.push(data.drinks[0][`strMeasure${i}`])
+            }
+            var template = "<h5 class='ingr-title'>Ingredients:</h5>";
+            for (i = 0; i < drinkMeasureArray.length; i++) {
+                console.log('Ingredient', (drinkMeasureArray[i] + ' ' + drinkIngrArray[i]))
+                template += `<li>${drinkMeasureArray[i] + ' ' + drinkIngrArray[i]}</li>`
+            }
+            console.log("template", template);
+            ingredientEl.innerHTML = template;
+
+            cocktailNameEl.innerHTML = data.drinks[0].strDrink;
+            cocktailFavorite = data.drinks[0].strDrink;
+            instructionsEl.innerHTML = data.drinks[0].strInstructions;
+
+            drinkIngrArray = [];
+            drinkMeasureArray = [];
+        })
+}
+
+cocktailBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
+    var cocktail = getCocktailID(cocktailInputEl.value)
+    console.log('cocktail info', cocktail)
+})
