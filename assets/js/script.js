@@ -5,8 +5,10 @@ var cocktailInputEl = document.querySelector('#cocktail-input');
 var cocktailBtnEl = document.querySelector('.cocktail-btn');
 var ingredientEl = document.querySelector('.ingredients');
 var instructionsEl = document.querySelector('.instructions');
-var cocktailNameEl = document.querySelector('.cocktail-name')
+var cocktailNameEl = document.querySelector('.cocktail-name');
+var favoriteBtnEl = document.querySelector('.favorite-btn')
 
+var cocktailFavorite;
 var drinkIngrArray = [];
 var drinkMeasureArray = [];
 
@@ -95,7 +97,7 @@ var displayCocktail = function (cocktailID) {
                 drinkIngrArray.push(data.drinks[0][`strIngredient${i}`])
                 drinkMeasureArray.push(data.drinks[0][`strMeasure${i}`])
             }
-            var template = "";
+            var template = "<h5 class='ingr-title'>Ingredients:</h5>";
             for (i = 0; i < drinkMeasureArray.length; i++) {
                 console.log('Ingredient', (drinkMeasureArray[i] + ' ' + drinkIngrArray[i]))
                 template += `<li>${drinkMeasureArray[i] + ' ' + drinkIngrArray[i]}</li>`
@@ -104,11 +106,19 @@ var displayCocktail = function (cocktailID) {
             ingredientEl.innerHTML = template;
 
             cocktailNameEl.innerHTML = data.drinks[0].strDrink;
+            cocktailFavorite = data.drinks[0].strDrink;
             instructionsEl.innerHTML = data.drinks[0].strInstructions;
 
             drinkIngrArray = [];
             drinkMeasureArray = [];
         })
+}
+
+var favoriteItems = function () {
+
+
+
+
 }
 
 // var favoritePairings = function(){
