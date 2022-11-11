@@ -3,6 +3,7 @@ var foodMenuEl = document.querySelector(".tasty");
 var startPageEl = document.querySelector(".start");
 var cocktailInputEl = document.querySelector('#cocktail-input');
 var cocktailBtnEl = document.querySelector('.cocktail-btn');
+var dinnerBtnEl = document.querySelector('.dinner-btn')
 var ingredientEl = document.querySelector('.ingredients');
 var instructionsEl = document.querySelector('.instructions');
 var cocktailNameEl = document.querySelector('.cocktail-name');
@@ -10,8 +11,8 @@ var favoriteBtnEl = document.querySelector('.favorite-btn')
 var dinnerSearchFormEl = document.querySelector("#dinner-search");
 var dinnerInputEl = document.querySelector("#dinner-input");
 var requestOptions = {
-  method: 'GET',
-  redirect: 'follow'
+    method: 'GET',
+    redirect: 'follow'
 };
 
 var cocktailFavorite;
@@ -21,71 +22,66 @@ var drinkMeasureArray = [];
 var cocktailID;
 var cocktail;
 
-yesButtonEl.addEventListener("click", function () {
-  foodMenuEl.classList.remove("hidden");
-  startPageEl.classList.add("hidden");
-});
+
 
 
 var getSpoonacularID = function (dinner) {
-  var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=e1b602421bad484d867c8e45948bb384&query=${dinner}`
-  fetch(url, requestOptions).then(function (response) {
-    if (response.ok) {
-      response.json().then(function (data) {
-        console.log(data);
-        var chosenRecipe=  data.results[Math.floor(Math.random() * data.results.length)];
-        console.log(chosenRecipe);
-        var chosenRecipeID = chosenRecipe.id
-        var chosenRecipeImage = chosenRecipe.image;
-        var chosenRecipeTitle = chosenRecipe.title;
-        console.log(chosenRecipeID);
-        console.log(chosenRecipeImage);
-        console.log(chosenRecipeTitle);
-        chosenRecipeInstructions(chosenRecipeID);
-        
-        
-      });
-    }
-  });
+    var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=e1b602421bad484d867c8e45948bb384&query=${dinner}`
+    fetch(url, requestOptions).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (data) {
+                console.log(data);
+                var chosenRecipe = data.results[Math.floor(Math.random() * data.results.length)];
+                console.log(chosenRecipe);
+                var chosenRecipeID = chosenRecipe.id
+                var chosenRecipeImage = chosenRecipe.image;
+                var chosenRecipeTitle = chosenRecipe.title;
+                console.log(chosenRecipeID);
+                console.log(chosenRecipeImage);
+                console.log(chosenRecipeTitle);
+                chosenRecipeInstructions(chosenRecipeID);
+
+
+            });
+        }
+    });
 };
 
 
 
-var chosenRecipeInstructions = function (chosenRecipeID){
-  var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=e1b602421bad484d867c8e45948bb384`
-  fetch(url, requestOptions).then(function (response) {
-    if (response.ok) {
-      response.json().then(function (data) {
-        console.log(data, 'recipe instructions array');
-        var recipeInstructions = data.instructions;
+var chosenRecipeInstructions = function (chosenRecipeID) {
+    var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=e1b602421bad484d867c8e45948bb384`
+    fetch(url, requestOptions).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (data) {
+                console.log(data, 'recipe instructions array');
+                var recipeInstructions = data.instructions;
 
-        console.log(recipeInstructions,'instructions');
-        var ingredients = data.extendedIngredients;
-        for (var i = 0; i < ingredients.length; i++){
-          var recipeIngredients = ingredients[i].original;
-          console.log(recipeIngredients);
+                console.log(recipeInstructions, 'instructions');
+                var ingredients = data.extendedIngredients;
+                for (var i = 0; i < ingredients.length; i++) {
+                    var recipeIngredients = ingredients[i].original;
+                    console.log(recipeIngredients);
+                }
+            });
         }
-      });
-    }
-  });
+    });
 };
 
 
 
 var formSubmitHandler = function (event) {
-  event.preventDefault();
-  var dinner = dinnerInputEl.value;
+    event.preventDefault();
+    var dinner = dinnerInputEl.value;
 
-  if (dinner) {
-    getSpoonacularID(dinner);
-  } else {
-    alert("Please enter a dish");
-  }
+    if (dinner) {
+        getSpoonacularID(dinner);
+    } else {
+        alert("Please enter a dish");
+    }
 };
 
-dinnerSearchFormEl.addEventListener("submit", formSubmitHandler);
-
-
+dinnerBtnEl.addEventListener("click", formSubmitHandler);
 
 
 const options = {
@@ -158,3 +154,8 @@ cocktailBtnEl.addEventListener('click', function (event) {
     var cocktail = getCocktailID(cocktailInputEl.value)
     console.log('cocktail info', cocktail)
 })
+
+yesButtonEl.addEventListener("click", function () {
+    foodMenuEl.classList.remove("hidden");
+    startPageEl.classList.add("hidden");
+});
