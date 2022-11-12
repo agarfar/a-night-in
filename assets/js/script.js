@@ -173,9 +173,11 @@ var displayCocktail = function (cocktailID) {
 var setFavoriteCombo = function () {
   recipeSearchHistory = JSON.parse(localStorage.getItem("recipeSearchHistory")) ?? [];
   if (chosenRecipeID && chosenRecipeTitle && cocktailID && cocktailName)
-    favoriteCombo.push([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
+    console.log([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
+  favoriteCombo.push([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
   recipeSearchHistory.push(favoriteCombo);
   localStorage.setItem('recipeSearchHistory', JSON.stringify(recipeSearchHistory))
+  favoriteCombo = [];
 }
 
 var getFavoriteCombos = function () {
@@ -203,7 +205,7 @@ favoriteBtnEl.addEventListener('click', function () {
 favoriteComboList.addEventListener('click', function (event) {
   if (event.target.matches("li")) {
     (event.target.innerText);
-    
+
   }
 
 })
@@ -211,7 +213,7 @@ favoriteComboList.addEventListener('click', function (event) {
 cocktailBtnEl.addEventListener("click", function (event) {
   event.preventDefault();
   var cocktail = getCocktailID(cocktailInputEl.value);
-  console.log("cocktail info", cocktail);
+  // console.log("cocktail info", cocktail);
 });
 
 yesButtonEl.addEventListener("click", function () {
