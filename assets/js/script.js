@@ -48,7 +48,7 @@ var cocktailImg;
 var cocktail;
 
 var getSpoonacularID = function (dinner) {
-  var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=e1b602421bad484d867c8e45948bb384&query=${dinner}`;
+  var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=489589f8208b436aa8a0f5d08f6d08c4&query=${dinner}`;
   fetch(url, requestOptions).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
@@ -68,7 +68,7 @@ var getSpoonacularID = function (dinner) {
 };
 
 var chosenRecipeInstructions = function (chosenRecipeID) {
-  var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=e1b602421bad484d867c8e45948bb384`;
+  var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=489589f8208b436aa8a0f5d08f6d08c4`;
   fetch(url, requestOptions).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
@@ -100,9 +100,10 @@ var formSubmitHandler = function (event) {
   if (dinner) {
     dinnerIngredientEl.innerHTML = '';
     getSpoonacularID(dinner);
-  } else {
-    alert("Please enter a dish");
   }
+  // else {
+  //   alert("Please enter a dish");
+  // }
 };
 
 const options = {

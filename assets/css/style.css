@@ -39,3 +39,33 @@ ul {
 .instructions {
     padding-left: 17px;
 }
+
+.resize {
+    width: 49%;
+    transition: flex-basis 500ms linear;
+}
+
+@media screen and (max-width: 768px) {
+
+    .resize {
+        width: 100%;
+        margin-top: 18px;
+    }
+
+    .media-wrap {
+        flex-wrap: wrap;
+    }
+
+    .menu-title {
+        font-size: 80px;
+    }
+
+    /* 
+    header {
+        flex-wrap: wrap;
+    }
+
+    * {
+        font-size: 4vw;
+    } */
+}

@@ -12,7 +12,7 @@
 
 <body>
     <div class="bg-dark text-secondary px-4 py-5 text-center start" style="height:100vh;">
-        <div class="py-5" style="margin-top: 10vw;">
+        <div class="py-5" style="margin-top: 20vh;">
             <h1 class="display-5 fw-bold text-white">A Night In</h1>
             <div class="col-lg-6 mx-auto">
                 <p class="fs-5 mb-4">Are you 21+?</p>
@@ -23,13 +23,13 @@
             </div>
         </div>
     </div>
-    <div class='tasty flex-column bg-light hidden'>
+    <div class='tasty flex-column bg-light hidden' style="height:100vh">
         <header class="mb-3">
             <h1 class="mt-2 menu-title">M E N U</h1>
         </header>
-        <div class="d-flex flex-row justify-content-between mx-4 mb-4">
-            <div class="food-menu d-flex flex-column"
-                style="width: 49%;background-color: white;border: solid 2px black;">
+        <div class="d-flex flex-row bg-light justify-content-between mx-4 mb-4 media-wrap">
+            <div class="food-menu d-flex flex-column col-sm-12 resize"
+                style="background-color: white;border: solid 2px black;">
                 <h2 class='ms-1 text-center mb-2'>M A I N</h2>
                 <h4 class='ms-1'>What kind of dish are you craving?</h4>
                 <form id="dinner-search" class="form w-25 ms-1 d-grid gap-3">
@@ -41,7 +41,7 @@
                 </form>
                 <div class='ms-1 main'>
                     <h4 class="dinner-name text-center"></h4>
-                    <div id="recipe-image" style="align-items:center;"></div>
+                    <div id="recipe-image" class="d-flex justify-content-center"></div>
                     <div>
                         <h5 class="dinner-ingredients-header"></h5>
                         <ol class="dinner-ingredients">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex flex-column" style="width: 49%;">
+            <div class="d-flex flex-column col-sm-12 resize">
                 <div class="d-flex flex-column" style="border: solid 2px black; background-color: white;">
                     <h2 class='ms-1 text-center mb-2'>D R I N K</h2>
                     <h4 class='ms-1'>What do you want in your drink?</h4>
@@ -68,7 +68,7 @@
                     </form>
                     <div class='ms-1 drink'>
                         <h4 class="cocktail-name text-center"></h4>
-                        <div id="drink-image" style="align-items:center;"></div>
+                        <div id="drink-image" class="d-flex justify-content-center"></div>
                         <div>
                             <h5 class="drink-ingredients-header"></h5>
                             <ol class="ingredients">
@@ -87,7 +87,7 @@
                     </ul>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="favorite-btn btn btn-secondary btn-sm mt-3">I love this
+                    <button type="button" class="favorite-btn btn btn-secondary btn-lg mt-3">I love this
                         combo!</button>
                 </div>
             </div>
