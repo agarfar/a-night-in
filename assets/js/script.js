@@ -213,6 +213,7 @@ var displayFavoriteCombos = function () {
 
 yesButtonEl.addEventListener("click", function () {
   foodMenuEl.classList.remove("hidden");
+  foodMenuEl.classList.add("d-flex");
   startPageEl.classList.add("hidden");
 });
 
