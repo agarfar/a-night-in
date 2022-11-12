@@ -11,6 +11,7 @@ var ingredientEl = document.querySelector(".ingredients");
 var instructionsHeaderEl = document.querySelector('.drink-instructions-header')
 var instructionsEl = document.querySelector(".instructions");
 var cocktailNameEl = document.querySelector(".cocktail-name");
+var cocktailImageEl = document.querySelector("#drink-image")
 
 var dinnerIngredientsHeaderEl = document.querySelector('.dinner-ingredients-header')
 var dinnerImageEl = document.querySelector("#recipe-image")
@@ -39,13 +40,15 @@ var recipeSearchHistory;
 
 var chosenRecipeID;
 var chosenRecipeTitle;
+var chosenRecipeImage;
 var cocktailName;
 var cocktailID;
+var cocktailImg;
 
 var cocktail;
 
 var getSpoonacularID = function (dinner) {
-  var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=63c3741b2d744176ad387ab7aa6a4032&query=${dinner}`;
+  var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=e1b602421bad484d867c8e45948bb384&query=${dinner}`;
   fetch(url, requestOptions).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
@@ -55,9 +58,9 @@ var getSpoonacularID = function (dinner) {
         // console.log(chosenRecipe);
         chosenRecipeID = chosenRecipe.id;
 
-        var chosenRecipeImage = chosenRecipe.image;
+        chosenRecipeImage = chosenRecipe.image;
         dinnerImageEl.innerHTML = `<img src='${chosenRecipeImage}'/>`;
-        
+
         chosenRecipeInstructions(chosenRecipeID);
       });
     }
@@ -65,7 +68,7 @@ var getSpoonacularID = function (dinner) {
 };
 
 var chosenRecipeInstructions = function (chosenRecipeID) {
-  var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=63c3741b2d744176ad387ab7aa6a4032`;
+  var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=e1b602421bad484d867c8e45948bb384`;
   fetch(url, requestOptions).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
@@ -95,6 +98,7 @@ var formSubmitHandler = function (event) {
   var dinner = dinnerInputEl.value;
 
   if (dinner) {
+    dinnerIngredientEl.innerHTML = '';
     getSpoonacularID(dinner);
   } else {
     alert("Please enter a dish");
@@ -168,9 +172,11 @@ var displayCocktail = function (cocktailID) {
       ingredientHeaderEl.innerHTML = 'Ingredients';
       ingredientEl.innerHTML = template;
 
+      cocktailImg = data.drinks[0].strDrinkThumb
       cocktailName = data.drinks[0].strDrink;
       cocktailNameEl.innerHTML = data.drinks[0].strDrink;
 
+      cocktailImageEl.innerHTML = `<img src='${cocktailImg + '/preview'}'/>`
       instructionsHeaderEl.innerHTML = 'Instructions';
       instructionsEl.innerHTML = data.drinks[0].strInstructions;
 
@@ -187,8 +193,10 @@ var setFavoriteCombo = function () {
   // favoriteCombo.push([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
   favoriteCombo['favRecipeID'] = chosenRecipeID;
   favoriteCombo['favRecipeName'] = chosenRecipeTitle;
+  favoriteCombo['favRecipeImg'] = chosenRecipeImage;
   favoriteCombo['favCocktailID'] = cocktailID;
   favoriteCombo['favCocktailName'] = cocktailName;
+  favoriteCombo['favCocktailImg'] = cocktailImg;
   recipeSearchHistory.push(favoriteCombo);
   localStorage.setItem('recipeSearchHistory', JSON.stringify(recipeSearchHistory))
   favoriteCombo = {};
@@ -227,8 +235,11 @@ favoriteComboList.addEventListener('click', function (event) {
   if (event.target.matches("li")) {
     for (i = 0; i < recipeSearchHistory.length; i++) {
       if (recipeSearchHistory[i].favRecipeName + ', ' + recipeSearchHistory[i].favCocktailName === event.target.innerText) {
+        dinnerIngredientEl.innerHTML = '';
         displayCocktail(recipeSearchHistory[i].favCocktailID)
         chosenRecipeInstructions(recipeSearchHistory[i].favRecipeID)
+        dinnerImageEl.innerHTML = `<img src='${recipeSearchHistory[i].favRecipeImg}'/>`;
+        cocktailImageEl.innerHTML = `<img src='${recipeSearchHistory[i].favCocktailImg + "/preview"}'/>`
       }
     }
   }
