@@ -24,33 +24,32 @@
         </div>
     </div>
     <div class='d-flex flex-column bg-light hidden'>
-        <header class="mb-5">
-            <h1 class="pt-5 menu-title">M E N U</h1>
+        <header class="mb-3">
+            <h1 class="mt-2 menu-title">M E N U</h1>
         </header>
         <div class="tasty d-flex flex-row justify-content-between mx-4 mb-4 hidden">
             <div class="food-menu d-flex flex-column"
                 style="width: 49%;background-color: white;border: solid 2px black;">
-                <h2 class='text-center'>M A I N</h2>
-                <h3 class="custom-h3">Dinner:</h3>
-                <form id="dinner-search" class="form w-25 d-grid gap-3">
+                <h2 class='ms-1 text-center mb-2'>M A I N</h2>
+                <h4 class='ms-1'>What kind of dish are you craving?</h4>
+                <form id="dinner-search" class="form w-25 ms-1 d-grid gap-3">
                     <!-- Search Input Field -->
                     <input id="dinner-input" class="form-input w-100 p-2 rounded border border-2" type="text"
                         placeholder="Search" />
                     <!-- Search Button -->
                     <button class="dinner-btn btn-info btn-block">Search</button>
                 </form>
-                <div class='ms-1'>
-                    <h4 class="dinner-name"></h4>
+                <div class='ms-1 main'>
+                    <h4 class="dinner-name text-center"></h4>
                     <div>
-
+                        <h5 class="dinner-ingredients-header"></h5>
                         <ol class="dinner-ingredients">
-
                         </ol>
                     </div>
                     <div>
-                        <h5 class>Instructions</h5>
+                        <!-- <h5 class>Instructions</h5> -->
+                        <h5 class="dinner-instructions-header"></h5>
                         <ol class="dinner-instructions">
-
                         </ol>
                     </div>
                 </div>
@@ -58,45 +57,46 @@
 
 
 
+            <div class="d-flex flex-column" style="width: 49%;background-color: white;">
+                <div class="d-flex flex-column" style="border: solid 2px black;">
+                    <h2 class='ms-1 text-center mb-2'>D R I N K</h2>
+                    <h4 class='ms-1'>What do you want in your drink?</h4>
+                    <form id="cocktail-search" class="form w-25 ms-1 d-grid gap-3">
+                        <!-- Search Input Field -->
+                        <input id="cocktail-input" class="ms-1 form-input w-100 p-2 rounded border border-2" type="text"
+                            placeholder="Search">
+                        <!-- Search Button -->
+                        <button class="ms-1 cocktail-btn btn-info btn-block">Search</button>
+                    </form>
+                    <!-- use bullet list items -->
 
-            <div class="d-flex flex-column" style="width: 49%;background-color: white;border: solid 2px black;">
-                <h2 class='ms-1 drink-title text-center'>D R I N K</h2>
-                <form id="cocktail-search" class="form w-25 ms-1 mt-5 d-grid gap-3">
-                    <h3 class="custom-h3">What alcohol would you like?: </h3>
-                    <!-- Search Input Field -->
-                    <input id="cocktail-input" class="ms-1 form-input w-100 p-2 rounded border border-2" type="text"
-                        placeholder="Search">
-                    <!-- Search Button -->
-                    <button class="ms-1 cocktail-btn btn-info btn-block">Search</button>
-                </form>
-                <!-- use bullet list items -->
-
-                <div class='ms-1'>
-                    <h4 class="cocktail-name"></h4>
-                    <div>
-
-                        <ol class="ingredients">
-
-                        </ol>
-                    </div>
-                    <div>
-                        <h5 class>Instructions</h5>
-                        <ol class="instructions">
-
-                        </ol>
-                    </div>
-
-                    <div class="favorites mt-5">
-                        <ul class="favorites-list">
-
-                        </ul>
-                        <button type="button" class="favorite-btn btn btn-secondary btn-sm">I love this
-                            combo!</button>
+                    <div class='ms-1 drink'>
+                        <h4 class="cocktail-name text-center"></h4>
+                        <div>
+                            <h5 class="drink-ingredients-header"></h5>
+                            <ol class="ingredients">
+                            </ol>
+                        </div>
+                        <div>
+                            <h5 class="drink-instructions-header"></h5>
+                            <ol class="instructions">
+                            </ol>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="favorites mt-3" style="border: solid 2px black;">
+                    <h4 class="text-center mb-2">F A V O R I T E S</h4>
+                    <ul class="favorites-list text-center d-flex flex-column align-items-center">
+                    </ul>
 
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="favorite-btn btn btn-secondary btn-sm mt-3">I love this
+                        combo!</button>
+                </div>
+            </div>
         </div>
+
     </div>
     </div>
 

@@ -26,3 +26,11 @@ header{
 .favorites-list{
     list-style-type: none;
 }
+
+.dinner-instructions{
+    padding-left: 10px;
+}
+
+.instructions{
+    padding-left: 17px;
+}

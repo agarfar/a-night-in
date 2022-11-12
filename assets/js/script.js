@@ -2,18 +2,27 @@ var yesButtonEl = document.querySelector(".yes");
 var foodMenuEl = document.querySelector(".tasty");
 var startPageEl = document.querySelector(".start");
 var cocktailInputEl = document.querySelector("#cocktail-input");
+
 var cocktailBtnEl = document.querySelector(".cocktail-btn");
 var dinnerBtnEl = document.querySelector(".dinner-btn");
+
+var ingredientHeaderEl = document.querySelector('.drink-ingredients-header')
 var ingredientEl = document.querySelector(".ingredients");
+var instructionsHeaderEl = document.querySelector('.drink-instructions-header')
 var instructionsEl = document.querySelector(".instructions");
 var cocktailNameEl = document.querySelector(".cocktail-name");
+
+var dinnerIngredientsHeaderEl = document.querySelector('.dinner-ingredients-header')
 var dinnerIngredientEl = document.querySelector(".dinner-ingredients");
+var dinnerInstructionsHeaderEl = document.querySelector('.dinner-instructions-header')
 var dinnerInstructionsEl = document.querySelector(".dinner-instructions");
 var dinnerNameEl = document.querySelector(".dinner-name");
+
+var favoriteComboList = document.querySelector('.favorites-list');
 var favoriteBtnEl = document.querySelector(".favorite-btn");
+
 var dinnerSearchFormEl = document.querySelector("#dinner-search");
 var dinnerInputEl = document.querySelector("#dinner-input");
-var favoriteComboList = document.querySelector('.favorites-list');
 
 var requestOptions = {
   method: "GET",
@@ -71,7 +80,9 @@ var chosenRecipeInstructions = function (chosenRecipeID) {
         dinnerInstructionsEl.innerHTML = recipeInstructions;
 
         var ingredients = data.extendedIngredients;
-        dinnerIngredientEl.innerHTML = "<h5 class='ingr-title'>Ingredients:</h5>";
+        dinnerIngredientsHeaderEl.innerHTML = 'Ingredients';
+        dinnerInstructionsHeaderEl.innerHTML = 'Instructions';
+        // dinnerIngredientEl.innerHTML = "<h5 class='ingr-title'>Ingredients:</h5>";
         for (var i = 0; i < ingredients.length; i++) {
           var recipeIngredients = ingredients[i].original;
           dinnerIngredientEl.innerHTML += `<li>${recipeIngredients}</li>`;
@@ -92,8 +103,6 @@ var formSubmitHandler = function (event) {
     alert("Please enter a dish");
   }
 };
-
-dinnerBtnEl.addEventListener("click", formSubmitHandler);
 
 const options = {
   method: "GET",
@@ -150,21 +159,39 @@ var displayCocktail = function (cocktailID) {
         drinkIngrArray.push(data.drinks[0][`strIngredient${i}`]);
         drinkMeasureArray.push(data.drinks[0][`strMeasure${i}`]);
       }
-      var template = "<h5 class='ingr-title'>Ingredients:</h5>";
+      var template = "";
       for (i = 0; i < drinkMeasureArray.length; i++) {
         // console.log(
         //   "Ingredient",
         //   drinkMeasureArray[i] + " " + drinkIngrArray[i]
         // );
-        template += `<li>${drinkMeasureArray[i] + " " + drinkIngrArray[i]
+        template += `<li>${drinkIngrArray[i] + ' - ' + drinkMeasureArray[i]
           }</li>`;
       }
       // console.log("template", template);
+
+      //       var ingredientHeaderEl = document.querySelector('.drink-ingredients-header')
+      // var ingredientEl = document.querySelector(".ingredients");
+      // var instructionsHeaderEl = document.querySelector('.drink-instructions-header')
+      // var instructionsEl = document.querySelector(".instructions");
+      // var cocktailNameEl = document.querySelector(".cocktail-name");
+
+      // var dinnerIngredientsHeaderEl = document.querySelector('.dinner-ingredients-header')
+      // var dinnerIngredientEl = document.querySelector(".dinner-ingredients");
+      // var dinnerInstructionsHeaderEl = document.querySelector('.dinner-instructions-header')
+      // var dinnerInstructionsEl = document.querySelector(".dinner-instructions");
+      // var dinnerNameEl = document.querySelector(".dinner-name");
+
+      ingredientHeaderEl.innerHTML = 'Ingredients';
+      // query select ingredients title div and insert inner html here
       ingredientEl.innerHTML = template;
 
       cocktailName = data.drinks[0].strDrink;
       cocktailNameEl.innerHTML = data.drinks[0].strDrink;
       // cocktailFavorite = data.drinks[0].strDrink;
+
+      instructionsHeaderEl.innerHTML = 'Instructions';
+      // query select instructions title div and insert inner html here  '<h5 class>Instructions</h5>' + 
       instructionsEl.innerHTML = data.drinks[0].strInstructions;
 
       drinkIngrArray = [];
@@ -198,12 +225,17 @@ var displayFavoriteCombos = function () {
 
   if (recipeSearchHistory) {
     for (i = 0; i < recipeSearchHistory.length; i++) {
-      template += `<li class = "fav-combo">${recipeSearchHistory[i].favRecipeName + ', ' + recipeSearchHistory[i].favCocktailName}</li>`;
+      template += `<li class = "fav-combo p-1 rounded mb-2">${recipeSearchHistory[i].favRecipeName + ', ' + recipeSearchHistory[i].favCocktailName}</li>`;
     }
     console.log(template);
     favoriteComboList.innerHTML = template;
   }
 }
+
+yesButtonEl.addEventListener("click", function () {
+  foodMenuEl.classList.remove("hidden");
+  startPageEl.classList.add("hidden");
+});
 
 favoriteBtnEl.addEventListener('click', function () {
   setFavoriteCombo();
@@ -228,10 +260,6 @@ cocktailBtnEl.addEventListener("click", function (event) {
   // console.log("cocktail info", cocktail);
 });
 
-yesButtonEl.addEventListener("click", function () {
-  foodMenuEl.classList.remove("hidden");
-  startPageEl.classList.add("hidden");
-});
+dinnerBtnEl.addEventListener("click", formSubmitHandler);
 
-// getFavoriteCombos();
 displayFavoriteCombos();
