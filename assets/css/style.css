@@ -10,3 +10,19 @@ header{
 .menu-title{
     font-size: 100px;
 }
+
+.fav-combo{
+    cursor: pointer;
+    background-color: lightgray;
+    width: fit-content;
+}
+
+.fav-combo:hover{
+    cursor: pointer;
+    opacity: .6;
+    background-color: rgba(209, 209, 32);
+}
+
+.favorites-list{
+    list-style-type: none;
+}
