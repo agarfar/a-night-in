@@ -2,18 +2,27 @@ var yesButtonEl = document.querySelector(".yes");
 var foodMenuEl = document.querySelector(".tasty");
 var startPageEl = document.querySelector(".start");
 var cocktailInputEl = document.querySelector("#cocktail-input");
+
 var cocktailBtnEl = document.querySelector(".cocktail-btn");
 var dinnerBtnEl = document.querySelector(".dinner-btn");
+
+var ingredientHeaderEl = document.querySelector('.drink-ingredients-header')
 var ingredientEl = document.querySelector(".ingredients");
+var instructionsHeaderEl = document.querySelector('.drink-instructions-header')
 var instructionsEl = document.querySelector(".instructions");
 var cocktailNameEl = document.querySelector(".cocktail-name");
+
+var dinnerIngredientsHeaderEl = document.querySelector('.dinner-ingredients-header')
 var dinnerIngredientEl = document.querySelector(".dinner-ingredients");
+var dinnerInstructionsHeaderEl = document.querySelector('.dinner-instructions-header')
 var dinnerInstructionsEl = document.querySelector(".dinner-instructions");
 var dinnerNameEl = document.querySelector(".dinner-name");
+
+var favoriteComboList = document.querySelector('.favorites-list');
 var favoriteBtnEl = document.querySelector(".favorite-btn");
+
 var dinnerSearchFormEl = document.querySelector("#dinner-search");
 var dinnerInputEl = document.querySelector("#dinner-input");
-var favoriteComboList = document.querySelector('.favorites-list');
 
 var requestOptions = {
   method: "GET",
@@ -25,7 +34,6 @@ var cocktailFavorite;
 var drinkIngrArray = [];
 var drinkMeasureArray = [];
 var favoriteCombo = {};
-// var favoriteCombo = [];
 var recipeSearchHistory;
 
 var chosenRecipeID;
@@ -46,12 +54,10 @@ var getSpoonacularID = function (dinner) {
         // console.log(chosenRecipe);
         chosenRecipeID = chosenRecipe.id;
         var chosenRecipeImage = chosenRecipe.image;
-        // chosenRecipeTitle = chosenRecipe.title;
         // console.log(chosenRecipeID);
         // console.log(chosenRecipeImage);
         // console.log(chosenRecipeTitle);
         chosenRecipeInstructions(chosenRecipeID);
-        // dinnerNameEl.innerHTML = chosenRecipeTitle;
       });
     }
   });
@@ -71,7 +77,8 @@ var chosenRecipeInstructions = function (chosenRecipeID) {
         dinnerInstructionsEl.innerHTML = recipeInstructions;
 
         var ingredients = data.extendedIngredients;
-        dinnerIngredientEl.innerHTML = "<h5 class='ingr-title'>Ingredients:</h5>";
+        dinnerIngredientsHeaderEl.innerHTML = 'Ingredients';
+        dinnerInstructionsHeaderEl.innerHTML = 'Instructions';
         for (var i = 0; i < ingredients.length; i++) {
           var recipeIngredients = ingredients[i].original;
           dinnerIngredientEl.innerHTML += `<li>${recipeIngredients}</li>`;
@@ -92,8 +99,6 @@ var formSubmitHandler = function (event) {
     alert("Please enter a dish");
   }
 };
-
-dinnerBtnEl.addEventListener("click", formSubmitHandler);
 
 const options = {
   method: "GET",
@@ -134,7 +139,6 @@ var displayCocktail = function (cocktailID) {
     .then(function (response) {
       if (response.ok) {
         return response.json();
-        // response.json();
       }
     })
     .then(function (data) {
@@ -150,21 +154,23 @@ var displayCocktail = function (cocktailID) {
         drinkIngrArray.push(data.drinks[0][`strIngredient${i}`]);
         drinkMeasureArray.push(data.drinks[0][`strMeasure${i}`]);
       }
-      var template = "<h5 class='ingr-title'>Ingredients:</h5>";
+      var template = "";
       for (i = 0; i < drinkMeasureArray.length; i++) {
         // console.log(
         //   "Ingredient",
         //   drinkMeasureArray[i] + " " + drinkIngrArray[i]
         // );
-        template += `<li>${drinkMeasureArray[i] + " " + drinkIngrArray[i]
+        template += `<li>${drinkIngrArray[i] + ' - ' + drinkMeasureArray[i]
           }</li>`;
       }
       // console.log("template", template);
+      ingredientHeaderEl.innerHTML = 'Ingredients';
       ingredientEl.innerHTML = template;
 
       cocktailName = data.drinks[0].strDrink;
       cocktailNameEl.innerHTML = data.drinks[0].strDrink;
-      // cocktailFavorite = data.drinks[0].strDrink;
+
+      instructionsHeaderEl.innerHTML = 'Instructions';
       instructionsEl.innerHTML = data.drinks[0].strInstructions;
 
       drinkIngrArray = [];
@@ -198,12 +204,17 @@ var displayFavoriteCombos = function () {
 
   if (recipeSearchHistory) {
     for (i = 0; i < recipeSearchHistory.length; i++) {
-      template += `<li class = "fav-combo">${recipeSearchHistory[i].favRecipeName + ', ' + recipeSearchHistory[i].favCocktailName}</li>`;
+      template += `<li class = "fav-combo p-1 rounded mb-2">${recipeSearchHistory[i].favRecipeName + ', ' + recipeSearchHistory[i].favCocktailName}</li>`;
     }
     console.log(template);
     favoriteComboList.innerHTML = template;
   }
 }
+
+yesButtonEl.addEventListener("click", function () {
+  foodMenuEl.classList.remove("hidden");
+  startPageEl.classList.add("hidden");
+});
 
 favoriteBtnEl.addEventListener('click', function () {
   setFavoriteCombo();
@@ -228,10 +239,6 @@ cocktailBtnEl.addEventListener("click", function (event) {
   // console.log("cocktail info", cocktail);
 });
 
-yesButtonEl.addEventListener("click", function () {
-  foodMenuEl.classList.remove("hidden");
-  startPageEl.classList.add("hidden");
-});
+dinnerBtnEl.addEventListener("click", formSubmitHandler);
 
-// getFavoriteCombos();
 displayFavoriteCombos();
