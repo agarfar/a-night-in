@@ -1,36 +1,36 @@
-.hidden{
-    display:none;
+.hidden {
+    display: none;
 }
 
 
-header{
+header {
     text-align: center;
 }
 
-.menu-title{
+.menu-title {
     font-size: 100px;
 }
 
-.fav-combo{
+.fav-combo {
     cursor: pointer;
     background-color: lightgray;
     width: fit-content;
 }
 
-.fav-combo:hover{
+.fav-combo:hover {
     cursor: pointer;
     opacity: .6;
     background-color: rgba(209, 209, 32);
 }
 
-.favorites-list{
+.favorites-list {
     list-style-type: none;
 }
 
-.dinner-instructions{
+.dinner-instructions {
     padding-left: 10px;
 }
 
-.instructions{
+.instructions {
     padding-left: 17px;
 }

@@ -34,7 +34,6 @@ var cocktailFavorite;
 var drinkIngrArray = [];
 var drinkMeasureArray = [];
 var favoriteCombo = {};
-// var favoriteCombo = [];
 var recipeSearchHistory;
 
 var chosenRecipeID;
@@ -55,12 +54,10 @@ var getSpoonacularID = function (dinner) {
         // console.log(chosenRecipe);
         chosenRecipeID = chosenRecipe.id;
         var chosenRecipeImage = chosenRecipe.image;
-        // chosenRecipeTitle = chosenRecipe.title;
         // console.log(chosenRecipeID);
         // console.log(chosenRecipeImage);
         // console.log(chosenRecipeTitle);
         chosenRecipeInstructions(chosenRecipeID);
-        // dinnerNameEl.innerHTML = chosenRecipeTitle;
       });
     }
   });
@@ -82,7 +79,6 @@ var chosenRecipeInstructions = function (chosenRecipeID) {
         var ingredients = data.extendedIngredients;
         dinnerIngredientsHeaderEl.innerHTML = 'Ingredients';
         dinnerInstructionsHeaderEl.innerHTML = 'Instructions';
-        // dinnerIngredientEl.innerHTML = "<h5 class='ingr-title'>Ingredients:</h5>";
         for (var i = 0; i < ingredients.length; i++) {
           var recipeIngredients = ingredients[i].original;
           dinnerIngredientEl.innerHTML += `<li>${recipeIngredients}</li>`;
@@ -143,7 +139,6 @@ var displayCocktail = function (cocktailID) {
     .then(function (response) {
       if (response.ok) {
         return response.json();
-        // response.json();
       }
     })
     .then(function (data) {
@@ -169,29 +164,13 @@ var displayCocktail = function (cocktailID) {
           }</li>`;
       }
       // console.log("template", template);
-
-      //       var ingredientHeaderEl = document.querySelector('.drink-ingredients-header')
-      // var ingredientEl = document.querySelector(".ingredients");
-      // var instructionsHeaderEl = document.querySelector('.drink-instructions-header')
-      // var instructionsEl = document.querySelector(".instructions");
-      // var cocktailNameEl = document.querySelector(".cocktail-name");
-
-      // var dinnerIngredientsHeaderEl = document.querySelector('.dinner-ingredients-header')
-      // var dinnerIngredientEl = document.querySelector(".dinner-ingredients");
-      // var dinnerInstructionsHeaderEl = document.querySelector('.dinner-instructions-header')
-      // var dinnerInstructionsEl = document.querySelector(".dinner-instructions");
-      // var dinnerNameEl = document.querySelector(".dinner-name");
-
       ingredientHeaderEl.innerHTML = 'Ingredients';
-      // query select ingredients title div and insert inner html here
       ingredientEl.innerHTML = template;
 
       cocktailName = data.drinks[0].strDrink;
       cocktailNameEl.innerHTML = data.drinks[0].strDrink;
-      // cocktailFavorite = data.drinks[0].strDrink;
 
       instructionsHeaderEl.innerHTML = 'Instructions';
-      // query select instructions title div and insert inner html here  '<h5 class>Instructions</h5>' + 
       instructionsEl.innerHTML = data.drinks[0].strInstructions;
 
       drinkIngrArray = [];
