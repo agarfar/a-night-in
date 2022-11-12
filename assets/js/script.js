@@ -13,6 +13,7 @@ var instructionsEl = document.querySelector(".instructions");
 var cocktailNameEl = document.querySelector(".cocktail-name");
 
 var dinnerIngredientsHeaderEl = document.querySelector('.dinner-ingredients-header')
+var dinnerImageEl = document.querySelector("#recipe-image")
 var dinnerIngredientEl = document.querySelector(".dinner-ingredients");
 var dinnerInstructionsHeaderEl = document.querySelector('.dinner-instructions-header')
 var dinnerInstructionsEl = document.querySelector(".dinner-instructions");
@@ -53,10 +54,10 @@ var getSpoonacularID = function (dinner) {
           data.results[Math.floor(Math.random() * data.results.length)];
         // console.log(chosenRecipe);
         chosenRecipeID = chosenRecipe.id;
+
         var chosenRecipeImage = chosenRecipe.image;
-        // console.log(chosenRecipeID);
-        // console.log(chosenRecipeImage);
-        // console.log(chosenRecipeTitle);
+        dinnerImageEl.innerHTML = `<img src='${chosenRecipeImage}'/>`;
+        
         chosenRecipeInstructions(chosenRecipeID);
       });
     }
