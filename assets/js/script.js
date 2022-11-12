@@ -24,7 +24,8 @@ var currentFavoriteCombo;
 var cocktailFavorite;
 var drinkIngrArray = [];
 var drinkMeasureArray = [];
-var favoriteCombo = [];
+var favoriteCombo = {};
+// var favoriteCombo = [];
 var recipeSearchHistory;
 
 var chosenRecipeID;
@@ -45,12 +46,12 @@ var getSpoonacularID = function (dinner) {
         // console.log(chosenRecipe);
         chosenRecipeID = chosenRecipe.id;
         var chosenRecipeImage = chosenRecipe.image;
-        chosenRecipeTitle = chosenRecipe.title;
+        // chosenRecipeTitle = chosenRecipe.title;
         // console.log(chosenRecipeID);
         // console.log(chosenRecipeImage);
         // console.log(chosenRecipeTitle);
         chosenRecipeInstructions(chosenRecipeID);
-        dinnerNameEl.innerHTML = chosenRecipeTitle;
+        // dinnerNameEl.innerHTML = chosenRecipeTitle;
       });
     }
   });
@@ -62,6 +63,8 @@ var chosenRecipeInstructions = function (chosenRecipeID) {
     if (response.ok) {
       response.json().then(function (data) {
         // console.log(data, "recipe instructions array");
+        chosenRecipeTitle = data.title;
+        dinnerNameEl.innerHTML = chosenRecipeTitle;
         var recipeInstructions = data.instructions;
 
         // console.log(recipeInstructions, "instructions");
@@ -174,10 +177,15 @@ var setFavoriteCombo = function () {
   recipeSearchHistory = JSON.parse(localStorage.getItem("recipeSearchHistory")) ?? [];
   if (chosenRecipeID && chosenRecipeTitle && cocktailID && cocktailName)
     console.log([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
-  favoriteCombo.push([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
+  // favoriteCombo.push([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
+  favoriteCombo['favRecipeID'] = chosenRecipeID;
+  favoriteCombo['favRecipeName'] = chosenRecipeTitle;
+  favoriteCombo['favCocktailID'] = cocktailID;
+  favoriteCombo['favCocktailName'] = cocktailName;
   recipeSearchHistory.push(favoriteCombo);
   localStorage.setItem('recipeSearchHistory', JSON.stringify(recipeSearchHistory))
-  favoriteCombo = [];
+  favoriteCombo = {};
+  // favoriteCombo = [];
 }
 
 var getFavoriteCombos = function () {
@@ -190,9 +198,9 @@ var displayFavoriteCombos = function () {
 
   if (recipeSearchHistory) {
     for (i = 0; i < recipeSearchHistory.length; i++) {
-      template += `<li>${recipeSearchHistory[i][0][0][1] + ', ' + recipeSearchHistory[i][0][1][1]}</li>`;
+      template += `<li class = "fav-combo">${recipeSearchHistory[i].favRecipeName + ', ' + recipeSearchHistory[i].favCocktailName}</li>`;
     }
-
+    console.log(template);
     favoriteComboList.innerHTML = template;
   }
 }
@@ -204,8 +212,12 @@ favoriteBtnEl.addEventListener('click', function () {
 
 favoriteComboList.addEventListener('click', function (event) {
   if (event.target.matches("li")) {
-    (event.target.innerText);
-
+    for (i = 0; i < recipeSearchHistory.length; i++) {
+      if (recipeSearchHistory[i].favRecipeName + ', ' + recipeSearchHistory[i].favCocktailName === event.target.innerText) {
+        displayCocktail(recipeSearchHistory[i].favCocktailID)
+        chosenRecipeInstructions(recipeSearchHistory[i].favRecipeID)
+      }
+    }
   }
 
 })
