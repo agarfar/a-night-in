@@ -44,9 +44,9 @@ var chosenRecipeImage;
 var cocktailName;
 var cocktailID;
 var cocktailImg;
-
 var cocktail;
 
+// generates random recipe ID from search query for use as a paramter to acquire recipe information
 var getSpoonacularID = function (dinner) {
   var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=489589f8208b436aa8a0f5d08f6d08c4&query=${dinner}`;
   fetch(url, requestOptions).then(function (response) {
@@ -67,6 +67,7 @@ var getSpoonacularID = function (dinner) {
   });
 };
 
+// used in getSpoonacularID to acquire specific recipe information
 var chosenRecipeInstructions = function (chosenRecipeID) {
   var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=489589f8208b436aa8a0f5d08f6d08c4`;
   fetch(url, requestOptions).then(function (response) {
@@ -93,6 +94,7 @@ var chosenRecipeInstructions = function (chosenRecipeID) {
   });
 };
 
+// runs getSpoonacularID witth user's input to generate a random recipe with ingredients list and instructions
 var formSubmitHandler = function (event) {
   event.preventDefault();
   var dinner = dinnerInputEl.value;
@@ -101,19 +103,10 @@ var formSubmitHandler = function (event) {
     dinnerIngredientEl.innerHTML = '';
     getSpoonacularID(dinner);
   }
-  // else {
-  //   alert("Please enter a dish");
-  // }
+
 };
 
-const options = {
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Key": "cd0d5f858cmshd6c0ec62f5398dap1ccc43jsnf57204214a17",
-    "X-RapidAPI-Host": "tasty.p.rapidapi.com",
-  },
-};
-
+// uses user input of ingredient or alcohol choice to generate random cocktail recipe ID for use in displayCocktail function
 var getCocktailID = function (alcohol) {
   var requestOptions = {
     method: "GET",
@@ -140,6 +133,7 @@ var getCocktailID = function (alcohol) {
     });
 };
 
+// uses random cocktail ID to generate and display ingredients and directions
 var displayCocktail = function (cocktailID) {
   fetch(`https://thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailID}`)
     .then(function (response) {
@@ -186,12 +180,11 @@ var displayCocktail = function (cocktailID) {
     });
 };
 
-
+// saves currently displayed recipes' information as an object, then saves it within a recipeSearchHistory array in localStorage
 var setFavoriteCombo = function () {
   recipeSearchHistory = JSON.parse(localStorage.getItem("recipeSearchHistory")) ?? [];
   if (chosenRecipeID && chosenRecipeTitle && cocktailID && cocktailName)
     console.log([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
-  // favoriteCombo.push([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
   favoriteCombo['favRecipeID'] = chosenRecipeID;
   favoriteCombo['favRecipeName'] = chosenRecipeTitle;
   favoriteCombo['favRecipeImg'] = chosenRecipeImage;
@@ -201,13 +194,14 @@ var setFavoriteCombo = function () {
   recipeSearchHistory.push(favoriteCombo);
   localStorage.setItem('recipeSearchHistory', JSON.stringify(recipeSearchHistory))
   favoriteCombo = {};
-  // favoriteCombo = [];
 }
 
+// returns recipeSearchHistory array from local storage
 var getFavoriteCombos = function () {
   recipeSearchHistory = JSON.parse(localStorage.getItem("recipeSearchHistory")) ?? [];
 }
 
+// displays favorited combos from local storage on the page
 var displayFavoriteCombos = function () {
   getFavoriteCombos();
   var template = "";
@@ -221,17 +215,20 @@ var displayFavoriteCombos = function () {
   }
 }
 
+// navigates user from start page to menu display when "Yes" is clicked
 yesButtonEl.addEventListener("click", function () {
   foodMenuEl.classList.remove("hidden");
   foodMenuEl.classList.add("d-flex");
   startPageEl.classList.add("hidden");
 });
 
+// saves currently displayed recipes to Favorites list on click
 favoriteBtnEl.addEventListener('click', function () {
   setFavoriteCombo();
   displayFavoriteCombos();
 });
 
+// clicking paired items in Favorites list displays the relevant recipes' information to the page
 favoriteComboList.addEventListener('click', function (event) {
   if (event.target.matches("li")) {
     for (i = 0; i < recipeSearchHistory.length; i++) {
@@ -247,12 +244,15 @@ favoriteComboList.addEventListener('click', function (event) {
 
 })
 
+// displays random cocktail information on click
 cocktailBtnEl.addEventListener("click", function (event) {
   event.preventDefault();
   var cocktail = getCocktailID(cocktailInputEl.value);
   // console.log("cocktail info", cocktail);
 });
 
+// displays random recipe information on click
 dinnerBtnEl.addEventListener("click", formSubmitHandler);
 
+// display any stored favorite combos to page
 displayFavoriteCombos();
