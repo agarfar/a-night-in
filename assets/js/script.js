@@ -48,19 +48,15 @@ var cocktail;
 
 // generates random recipe ID from search query for use as a paramter to acquire recipe information
 var getSpoonacularID = function (dinner) {
-  var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=489589f8208b436aa8a0f5d08f6d08c4&query=${dinner}`;
+  var url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=b286b8d959d04a8b8162b7f531ff9213&query=${dinner}`;
   fetch(url, requestOptions).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
-        // console.log(data);
         var chosenRecipe =
           data.results[Math.floor(Math.random() * data.results.length)];
-        // console.log(chosenRecipe);
         chosenRecipeID = chosenRecipe.id;
-
         chosenRecipeImage = chosenRecipe.image;
         dinnerImageEl.innerHTML = `<img src='${chosenRecipeImage}'/>`;
-
         chosenRecipeInstructions(chosenRecipeID);
       });
     }
@@ -69,7 +65,7 @@ var getSpoonacularID = function (dinner) {
 
 // used in getSpoonacularID to acquire specific recipe information
 var chosenRecipeInstructions = function (chosenRecipeID) {
-  var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=489589f8208b436aa8a0f5d08f6d08c4`;
+  var url = `https://api.spoonacular.com/recipes/${chosenRecipeID}/information?apiKey=b286b8d959d04a8b8162b7f531ff9213`;
   fetch(url, requestOptions).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
@@ -77,17 +73,13 @@ var chosenRecipeInstructions = function (chosenRecipeID) {
         chosenRecipeTitle = data.title;
         dinnerNameEl.innerHTML = chosenRecipeTitle;
         var recipeInstructions = data.instructions;
-
-        // console.log(recipeInstructions, "instructions");
         dinnerInstructionsEl.innerHTML = recipeInstructions;
-
         var ingredients = data.extendedIngredients;
         dinnerIngredientsHeaderEl.innerHTML = 'Ingredients';
         dinnerInstructionsHeaderEl.innerHTML = 'Instructions';
         for (var i = 0; i < ingredients.length; i++) {
           var recipeIngredients = ingredients[i].original;
           dinnerIngredientEl.innerHTML += `<li>${recipeIngredients}</li>`;
-          // console.log(recipeIngredients);
         }
       });
     }
@@ -123,11 +115,8 @@ var getCocktailID = function (alcohol) {
       }
     })
     .then(function (data) {
-      // console.log('alcoholList', data.drinks);
       var randomCocktail =
         data.drinks[Math.floor(Math.random() * data.drinks.length)];
-      // console.log(randomCocktail);
-      // console.log("randomCocktailID", randomCocktail.idDrink);
       cocktailID = randomCocktail.idDrink;
       displayCocktail(cocktailID);
     });
@@ -142,7 +131,6 @@ var displayCocktail = function (cocktailID) {
       }
     })
     .then(function (data) {
-      // console.log(data);
       for (i = 1; i <= 15; i++) {
         if (
           data.drinks[0][`strIngredient${i}`] === null ||
@@ -150,20 +138,14 @@ var displayCocktail = function (cocktailID) {
         ) {
           break;
         }
-        // console.log(data.drinks[0]['strIngredient1'])
         drinkIngrArray.push(data.drinks[0][`strIngredient${i}`]);
         drinkMeasureArray.push(data.drinks[0][`strMeasure${i}`]);
       }
       var template = "";
       for (i = 0; i < drinkMeasureArray.length; i++) {
-        // console.log(
-        //   "Ingredient",
-        //   drinkMeasureArray[i] + " " + drinkIngrArray[i]
-        // );
         template += `<li>${drinkIngrArray[i] + ' - ' + drinkMeasureArray[i]
           }</li>`;
       }
-      // console.log("template", template);
       ingredientHeaderEl.innerHTML = 'Ingredients';
       ingredientEl.innerHTML = template;
 
@@ -183,17 +165,18 @@ var displayCocktail = function (cocktailID) {
 // saves currently displayed recipes' information as an object, then saves it within a recipeSearchHistory array in localStorage
 var setFavoriteCombo = function () {
   recipeSearchHistory = JSON.parse(localStorage.getItem("recipeSearchHistory")) ?? [];
-  if (chosenRecipeID && chosenRecipeTitle && cocktailID && cocktailName)
-    console.log([[chosenRecipeID, chosenRecipeTitle], [cocktailID, cocktailName]])
-  favoriteCombo['favRecipeID'] = chosenRecipeID;
-  favoriteCombo['favRecipeName'] = chosenRecipeTitle;
-  favoriteCombo['favRecipeImg'] = chosenRecipeImage;
-  favoriteCombo['favCocktailID'] = cocktailID;
-  favoriteCombo['favCocktailName'] = cocktailName;
-  favoriteCombo['favCocktailImg'] = cocktailImg;
-  recipeSearchHistory.push(favoriteCombo);
+  if (chosenRecipeID && chosenRecipeTitle && cocktailID && cocktailName) {
+    favoriteCombo['favRecipeID'] = chosenRecipeID;
+    favoriteCombo['favRecipeName'] = chosenRecipeTitle;
+    favoriteCombo['favRecipeImg'] = chosenRecipeImage;
+    favoriteCombo['favCocktailID'] = cocktailID;
+    favoriteCombo['favCocktailName'] = cocktailName;
+    favoriteCombo['favCocktailImg'] = cocktailImg;
+    recipeSearchHistory.push(favoriteCombo);
+  }
   localStorage.setItem('recipeSearchHistory', JSON.stringify(recipeSearchHistory))
   favoriteCombo = {};
+
 }
 
 // returns recipeSearchHistory array from local storage
@@ -248,7 +231,6 @@ favoriteComboList.addEventListener('click', function (event) {
 cocktailBtnEl.addEventListener("click", function (event) {
   event.preventDefault();
   var cocktail = getCocktailID(cocktailInputEl.value);
-  // console.log("cocktail info", cocktail);
 });
 
 // displays random recipe information on click
