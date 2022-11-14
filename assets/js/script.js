@@ -69,7 +69,6 @@ var chosenRecipeInstructions = function (chosenRecipeID) {
   fetch(url, requestOptions).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
-        // console.log(data, "recipe instructions array");
         chosenRecipeTitle = data.title;
         dinnerNameEl.innerHTML = chosenRecipeTitle;
         var recipeInstructions = data.instructions;
@@ -176,7 +175,6 @@ var setFavoriteCombo = function () {
   }
   localStorage.setItem('recipeSearchHistory', JSON.stringify(recipeSearchHistory))
   favoriteCombo = {};
-
 }
 
 // returns recipeSearchHistory array from local storage
