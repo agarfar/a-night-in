@@ -28,6 +28,10 @@ Risvi Tareq: https://github.com/ivsir
 
 Anthony Farris: https://github.com/agarfar
 
+Spoonacular: https://spoonacular.com/food-api
+
+TheCocktailDB: https://www.thecocktaildb.com/api.php
+
 ## License
 
 N/A
