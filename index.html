@@ -7,6 +7,8 @@
     <title>A Night In</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cantarell&display=swap" rel="stylesheet">
@@ -39,30 +41,33 @@
         <!-- Flex Row Containing Menu Containers/Divs -->
         <div class="d-flex flex-row bg-light justify-content-between mx-4 mb-4 media-wrap">
             <!-- Main Dish Recipe -->
-            <div class="food-menu d-flex flex-column col-sm-12 resize"
+            <div class="food-menu d-flex flex-column col-sm-12 p-3 align-items-center resize"
                 style="background-color: white;border: solid 2px black;">
                 <h2 class='ms-1 text-center mb-3 mt-3'>M A I N</h2>
-                <h4 class='ms-1'>What kind of dish are you craving?</h4>
-                <form id="dinner-search" class="form w-25 ms-1 d-grid gap-3">
+                <h4 class='ms-1 text-center'>What kind of dish are you craving?</h4>
+                <form id="dinner-search"
+                    class="form w-50 ms-1 mb-4 gap-3 d-flex justify-content-center align-items-center rounded border border-2">
                     <!-- Main Dish Search Input Field -->
-                    <input id="dinner-input" class="form-input w-100 p-2 rounded border border-2" type="text"
-                        placeholder="Search" />
+
+                    <input id="dinner-input" class="form-input w-100 border-0" type="text"
+                        placeholder="e.g., lasagna" />
                     <!-- Search Button -->
-                    <button class="dinner-btn btn-info btn-block">Search</button>
+                    <button class="dinner-btn btn-info btn-block bg-transparent border-0 "><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
                 <div class='ms-1 main'>
                     <h4 class="dinner-name text-center"></h4>
                     <!-- Recipe Image -->
-                    <div id="recipe-image" class="d-flex justify-content-center"></div>
+                    <div id="recipe-image" class="d-flex justify-content-center pb-5"></div>
                     <!-- Recipe Ingredients -->
                     <div>
-                        <h5 class="dinner-ingredients-header"></h5>
-                        <ol class="dinner-ingredients">
+                        <h5 class="dinner-ingredients-header text-center font-weight-bold"></h5>
+                        <ol class="dinner-ingredients text-decoration-none">
                         </ol>
                     </div>
                     <!-- Recipe Instructions -->
                     <div>
-                        <h5 class="dinner-instructions-header"></h5>
+                        <h5 class="dinner-instructions-header text-center"></h5>
                         <ol class="dinner-instructions">
                         </ol>
                     </div>
@@ -70,29 +75,32 @@
             </div>
             <!-- Cocktail Recipe -->
             <div class="d-flex flex-column col-sm-12 resize">
-                <div class="d-flex flex-column" style="border: solid 2px black; background-color: white;">
+                <div class="d-flex flex-column p-3 align-items-center"
+                    style="border: solid 2px black; background-color: white;">
                     <h2 class='ms-1 text-center mb-3 mt-3'>D R I N K</h2>
-                    <h4 class='ms-1'>What do you want in your drink?</h4>
-                    <form id="cocktail-search" class="form w-25 ms-1 d-grid gap-3">
+                    <h4 class='ms-1 text-center'>What do you want in your drink?</h4>
+                    <form id="cocktail-search"
+                        class="form w-50 ms-1 gap-3 mb-4 d-flex justify-content-center rounded border border-2">
                         <!-- Alcohol/Ingredient Search Input Field -->
-                        <input id="cocktail-input" class="ms-1 form-input w-100 p-2 rounded border border-2" type="text"
-                            placeholder="Search">
+                        <input id="cocktail-input" class="ms-1 form-input w-100 border-0" type="text"
+                            placeholder="e.g., vodka">
                         <!-- Search Button -->
-                        <button class="ms-1 cocktail-btn btn-info btn-block">Search</button>
+                        <button class="ms-1 cocktail-btn btn-info btn-block bg-transparent border-0 "><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                     <div class='ms-1 drink'>
                         <h4 class="cocktail-name text-center"></h4>
                         <!-- Cocktail Image -->
-                        <div id="drink-image" class="d-flex justify-content-center"></div>
+                        <div id="drink-image" class="d-flex justify-content-center pb-5" style="m-5"></div>
                         <!-- Cocktail Ingredients -->
                         <div>
-                            <h5 class="drink-ingredients-header"></h5>
+                            <h5 class="drink-ingredients-header text-center"></h5>
                             <ol class="ingredients">
                             </ol>
                         </div>
                         <!-- Cocktail Instructions -->
                         <div>
-                            <h5 class="drink-instructions-header"></h5>
+                            <h5 class="drink-instructions-header text-center"></h5>
                             <ol class="instructions">
                             </ol>
                         </div>
@@ -105,13 +113,14 @@
                     </ul>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="favorite-btn btn btn-secondary btn-lg mt-3">I love this
+                    <button type="button" class="favorite-btn btn btn-secondary w-100 btn-lg mt-3">I love this
                         combo!</button>
                 </div>
             </div>
         </div>
     </div>
     </div>
+    <script src="https://kit.fontawesome.com/f8125eb389.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
